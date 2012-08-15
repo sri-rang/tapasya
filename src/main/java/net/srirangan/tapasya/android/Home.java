@@ -1,42 +1,60 @@
 package net.srirangan.tapasya.android;
 
 import android.app.Activity;
-import android.media.MediaPlayer;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.CheckBox;
+import net.srirangan.tapasya.android.services.OmService;
 
 import java.io.IOException;
 
 public class Home extends Activity {
 
-  MediaPlayer mediaPlayer;
+  private OmService omService;
+
+  private boolean bound = false;
+
+  private ServiceConnection omServiceConnection = new ServiceConnection() {
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+      OmService.LocalBinder binder = (OmService.LocalBinder) service;
+      omService = binder.getService();
+      bound = true;
+      omService.initialize();
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+      bound = false;
+    }
+  };
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home);
+    Intent intent = new Intent(this, OmService.class);
+    bindService(intent, omServiceConnection, Context.BIND_AUTO_CREATE);
   }
 
   @Override
-  public void onStart() {
-    super.onStart();
-    mediaPlayer = MediaPlayer.create(this, R.raw.om);
-    mediaPlayer.setLooping(true);
-  }
-
-  @Override
-  public void onStop() {
-    super.onStop();
-    if (mediaPlayer != null && mediaPlayer.isPlaying()) mediaPlayer.stop();
+  public void onDestroy() {
+    super.onDestroy();
+    omService.forceStop();
+    if (bound) {
+      unbindService(omServiceConnection);
+      bound = false;
+    }
   }
 
   public void toggleOmChants(View view) throws IOException {
-    if (((CheckBox) view).isChecked()) {
-      if (mediaPlayer != null) mediaPlayer.start();
-    } else {
-      if (mediaPlayer != null && mediaPlayer.isPlaying()) mediaPlayer.pause();
-    }
+    Boolean turnOn = ((CheckBox) view).isChecked();
+    omService.toggle(turnOn);
   }
 
 }
