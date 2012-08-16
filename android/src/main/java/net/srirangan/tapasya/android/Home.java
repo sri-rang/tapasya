@@ -8,24 +8,24 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
-import android.widget.CheckBox;
-import net.srirangan.tapasya.android.services.OmService;
+import android.widget.CompoundButton;
+import net.srirangan.tapasya.android.services.PlayerService;
 
 import java.io.IOException;
 
 public class Home extends Activity {
 
-  private OmService omService;
+  private PlayerService playerService;
 
   private boolean bound = false;
 
   private ServiceConnection omServiceConnection = new ServiceConnection() {
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
-      OmService.LocalBinder binder = (OmService.LocalBinder) service;
-      omService = binder.getService();
+      PlayerService.LocalBinder binder = (PlayerService.LocalBinder) service;
+      playerService = binder.getService();
       bound = true;
-      omService.initialize();
+      playerService.initialize();
     }
 
     @Override
@@ -38,23 +38,30 @@ public class Home extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.home);
-    Intent intent = new Intent(this, OmService.class);
+    Intent intent = new Intent(this, PlayerService.class);
     bindService(intent, omServiceConnection, Context.BIND_AUTO_CREATE);
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
-    omService.forceStop();
+    playerService.forceStop();
     if (bound) {
       unbindService(omServiceConnection);
       bound = false;
     }
   }
 
-  public void toggleOmChants(View view) throws IOException {
-    Boolean turnOn = ((CheckBox) view).isChecked();
-    omService.toggle(turnOn);
+  public void toggleOm(View view) throws IOException {
+    if (bound) playerService.toggleOm(((CompoundButton) view).isChecked());
+  }
+
+  public void toggleRain(View view) throws IOException {
+    if (bound) playerService.toggleRain(((CompoundButton) view).isChecked());
+  }
+
+  public void toggleForest(View view) throws IOException {
+    if (bound) playerService.toggleForest(((CompoundButton) view).isChecked());
   }
 
 }
