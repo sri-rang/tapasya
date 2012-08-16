@@ -2,6 +2,9 @@
 <resources>
 
   <string name="app_name">Tapasya</string>
-  <string name="home_checkbox_om">Om mantra</string>
+  <string name="home_checkbox_om">Om</string>
+  <string name="home_checkbox_rain">Rain</string>
+  <string name="home_checkbox_forest">Forest</string>
+  <string name="home_text">Sounds to help you meditate, study and sleep</string>
 
 </resources>
