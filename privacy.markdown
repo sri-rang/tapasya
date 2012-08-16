@@ -8,4 +8,4 @@ You are completely safe
 
 * Tapasya does not request any extra permissions on your device
 * Tapasya does not access any private / personal data on your device
-* Tapasya is open source, feel free to scrutanize [Tapasya on GitHub](https://github.com/Srirangan/tapasya)
+* Tapasya is open source, feel free to scrutinize [Tapasya on GitHub](https://github.com/Srirangan/tapasya)
