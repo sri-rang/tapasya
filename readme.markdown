@@ -8,9 +8,9 @@ Sounds to help you meditate, study and sleep.
 
 ## How does it help me?
 
-* Zone out of everyday audio clutter
+* Zone out everyday audio clutter
 * Meditate on the rhythmic om chants
-* Study / sleep with the sounds of rains and forests
+* Study / sleep alongside sounds of rains and forests
 
 ## Is it easy to use?
 
