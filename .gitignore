@@ -8,3 +8,8 @@ bin
 keys
 
 proguard_logs
+
+.cordova
+merges
+platforms
+plugins

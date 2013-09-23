@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="net.srirangan.tapasya.cordova" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
+  <name>tapasya</name>
+  <description>Tapasya helps you meditate</description>
+  <author email="srirangan@gmail.com" href="http://www.srirangan.net">Srirangan</author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="fullscreen" value="true"/>
+  <preference name="webviewbounce" value="true"/>
+</widget>
